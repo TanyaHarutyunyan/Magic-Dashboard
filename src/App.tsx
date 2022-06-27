@@ -1,24 +1,46 @@
-import React from 'react';
-import logo from './logo.svg';
+import { useEffect, useState, FC } from 'react';
 import './App.css';
+import {BrowserRouter as Router, Routes, Route} from "react-router-dom"
+import Login from './components/login/login';
+import Dashboard from './components/dashboard/dashboard';
+import User from './components/user/user';
+import { IRoute } from './routeTypes';
 
-function App() {
+const App: FC = () => {
+
+  const routes: IRoute[] = [
+    {
+        path: "/",
+        element: <Login />,
+        name: "Login"
+    },
+    {
+        path: "/dashboard",
+        element: <Dashboard />,
+        name: "Dashboard"
+    },
+    {
+        path: `/user/:data`,
+        element: <User />,
+        name: "User"
+    }
+  ]
+
+  const [data, setData] = useState<string | null>("")
+
+  useEffect(() => {
+    setData(localStorage.getItem("selected_user_id"))
+  }, [])
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Router>
+        <Routes>
+          {routes.map((route) => {
+            return <Route path={route.path} element={route.element} key={route.name}/>
+          })}
+        </Routes>
+      </Router>
     </div>
   );
 }
