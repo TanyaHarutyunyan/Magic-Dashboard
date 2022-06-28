@@ -14,9 +14,13 @@ const Header: FC = () => {
         navigate("/")
     }
 
+    function toHomepage() {
+        navigate("/dashboard")
+    }
+
     return (
         <Box className={classes.header}>
-            <Typography variant="h4" className={classes.title}>MAGIC DASHBOARD</Typography>
+            <Typography variant="h4" className={classes.title} onClick={toHomepage}>MAGIC DASHBOARD</Typography>
             <Button variant="contained" size="large" onClick={logout}>LOGOUT</Button>
         </Box>
     )

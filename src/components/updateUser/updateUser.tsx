@@ -26,6 +26,17 @@ const UpdateUserModal: FC = () => {
         }
     }
 
+    function updateUserEmail (e: ChangeEvent<HTMLInputElement>){
+        if (e.target.value.length > 0){
+            setUpdateFields({
+                ...updateFields, 
+                email: e.target.value
+            })
+        }else {
+            delete updateFields.email
+        }
+    }
+
     function updateUserPhone (e: ChangeEvent<HTMLInputElement>){
         if (e.target.value.length > 0){
             setUpdateFields({
@@ -59,11 +70,22 @@ const UpdateUserModal: FC = () => {
         }
     }
 
+    function updateUserActiveBonus (e: ChangeEvent<HTMLInputElement>){
+        if (e.target.value.length > 0){
+            setUpdateFields({
+                ...updateFields, 
+                active_bonus: e.target.value
+            })
+        }else {
+            delete updateFields.activeBonus
+        }
+    }
+
     function updateUserReferrerCount (e: ChangeEvent<HTMLInputElement>){
         if (e.target.value.length > 0){
             setUpdateFields({
                 ...updateFields, 
-                referrerCount: e.target.value
+                referrer_count: e.target.value
             })
         }else {
             delete updateFields.referrerCount
@@ -80,6 +102,39 @@ const UpdateUserModal: FC = () => {
             delete updateFields.referrer
         }
     }
+
+    function updateUserBalance (e: ChangeEvent<HTMLInputElement>){
+        if (e.target.value.length > 0){
+            setUpdateFields({
+                ...updateFields, 
+                balance: `$${e.target.value}`
+            })
+        }else {
+            delete updateFields.balance
+        }
+    }
+
+    function updateUserVerification (e: ChangeEvent<HTMLInputElement>){
+        if (e.target.value.length > 0){
+            setUpdateFields({
+                ...updateFields, 
+                verification: e.target.value
+            })
+        }else {
+            delete updateFields.verification
+        }
+    }
+
+    function updateUserStatus (e: ChangeEvent<HTMLInputElement>){
+        if (e.target.value.length > 0){
+            setUpdateFields({
+                ...updateFields, 
+                status: e.target.value
+            })
+        }else {
+            delete updateFields.status
+        }
+    }
    
     function enterUpdates(){
         dispatch({
@@ -88,6 +143,7 @@ const UpdateUserModal: FC = () => {
         })
         if (Object.keys(updateFields).length !== 0){
             const bearerToken = localStorage.getItem("access_token")
+            const selected_user_id = localStorage.getItem("selected_user_id");
             let myHeaders = new Headers();
             myHeaders.append("Content-Type", "application/json");
             myHeaders.append("Accept", "application/json");
@@ -103,9 +159,9 @@ const UpdateUserModal: FC = () => {
               body: raw,
             };
 
-            fetch(`${process.env.REACT_APP_BASEURL}/v1/users/update/62b5082b445d0018412a2ca8`, requestOptions)
+            fetch(`${process.env.REACT_APP_BASEURL}/v1/users/update/${selected_user_id}`, requestOptions)
               .then(response => response.json())
-              .then(result => dispatch(fetchData()))
+              .then(result => window.location.reload())
               .catch(error => console.log('error', error));
         }
     }
@@ -123,6 +179,12 @@ const UpdateUserModal: FC = () => {
             label: "Name",
             type: "text",
             change: updateUserName,
+            prop: "name"
+        },
+        {
+            label: "Email",
+            type: "text",
+            change: updateUserEmail,
             prop: "name"
         },
         {
@@ -147,7 +209,14 @@ const UpdateUserModal: FC = () => {
 
         }, 
         {
-            label: "ReferrerCount",
+            label: "Active Bonus",
+            type: "text",
+            change: updateUserActiveBonus,
+            prop: "activeBonus"
+
+        },
+        {
+            label: "Referrer Count",
             type: "number",
             change: updateUserReferrerCount,
             prop: "referrerCount"
@@ -158,7 +227,24 @@ const UpdateUserModal: FC = () => {
             type: "number",
             change: updateUserReferrer,
             prop: "referrer"
-
+        },
+        {
+            label: "Balance",
+            type: "number",
+            change: updateUserBalance,
+            prop: "balance"
+        },
+        {
+            label: "Verification",
+            type: "text",
+            change: updateUserVerification,
+            prop: "verification"
+        },
+        {
+            label: "Status",
+            type: "boolean",
+            change: updateUserStatus,
+            prop: "status"
         }
     ]
 
@@ -167,17 +253,22 @@ const UpdateUserModal: FC = () => {
     return (
         <Box className={classes.updateUserModal} style={{display: isOpen ? "flex" : "none"}}>
             <Typography variant="h4" className={classes.title}>UPDATE USER DATA</Typography>
-            {textFields.map((textField: any) => {
-                return <TextField
-                key={textField.label}
-                label={textField.label}
-                type={textField.text}
-                margin="dense"
-                onChange={textField.change} 
-                />
-            })}
-            <Button variant="contained" size="large" onClick={enterUpdates}>Enter Updates</Button>
-            <Button variant="contained" size="large" onClick={cancelUpdate}>Cancel</Button>
+            <Box className={classes.someDiv}>
+                {textFields.map((textField: any) => {
+                    return <TextField
+                    key={textField.label}
+                    label={textField.label}
+                    type={textField.type}
+                    margin="dense"
+                    onChange={textField.change} 
+                    className={classes.updateField}
+                    />
+                })}
+            </Box>
+            <Box className={classes.btnWrapper}>
+                <Button variant="contained" size="large" className={classes.updateBtn} onClick={enterUpdates}>Enter Updates</Button>
+                <Button variant="contained" size="large" className={classes.updateBtn} onClick={cancelUpdate}>Cancel</Button>
+            </Box>
         </Box>
     )
 }

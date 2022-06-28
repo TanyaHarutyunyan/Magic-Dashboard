@@ -14,5 +14,6 @@ export const styles: Function = makeStyles({
     title: {
         color: "white",
         fontWeight: 700,
+        cursor: "pointer"
     }
 })
