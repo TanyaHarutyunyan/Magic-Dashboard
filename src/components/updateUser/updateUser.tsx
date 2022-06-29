@@ -41,7 +41,7 @@ const UpdateUserModal: FC = () => {
         if (e.target.value.length > 0){
             setUpdateFields({
                 ...updateFields, 
-                phone: e.target.value
+                phone: `+${e.target.value}`
             })
         }else {
             delete updateFields.phone
