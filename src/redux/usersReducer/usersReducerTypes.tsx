@@ -11,6 +11,7 @@ export interface IInitialState {
 export interface IState{
     usersReducer: IUsersReducer
     updateModalReducer: IUpdateModalReducer
+    depositMoneyReducer: IUpdateModalReducer
 }
 
 export interface IUpdateModalReducer{
@@ -19,7 +20,6 @@ export interface IUpdateModalReducer{
 
 export interface IUsersReducer{
     users: IUsersList
-    
 }
 
 export interface IUsersList {

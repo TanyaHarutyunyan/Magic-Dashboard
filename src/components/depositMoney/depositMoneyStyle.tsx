@@ -1,7 +1,8 @@
 import { makeStyles } from "@mui/styles"
+import { calculateNewValue } from "@testing-library/user-event/dist/utils"
 
 export const styles: Function = makeStyles({
-    updateUserModal:{
+    depositMoneyModal:{
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
@@ -11,30 +12,25 @@ export const styles: Function = makeStyles({
         background: "white",
         top: "50%",
         left: "50%",
-        transform: "translate(-50%, 30%)",
+        transform: "translate(-50%, 70%)",
         zIndex: 10,
-        width: "90%",
+        width: "60%",
     },
     title: {
         color: "#1064a9",
         fontWeight: 500
     },
-    updateField: {
+    depositMoneyField: {
         width: "30%"
-    },
-    fieldsWrapper: {
-        display: "flex",
-        justifyContent: "center",
-        gap: "10px",
-        flexWrap: "wrap",
     },
     btnWrapper: {
         width: "90%",
         display: "flex",
-        justifyContent: "center",
+        flexDirection: "column",
+        alignItems: "center",
         gap: "10px"
     },
-    updateBtn:{
+    depositMoneyBtn:{
         width: "50%",
     }
 })

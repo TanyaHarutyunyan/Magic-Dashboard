@@ -253,7 +253,7 @@ const UpdateUserModal: FC = () => {
     return (
         <Box className={classes.updateUserModal} style={{display: isOpen ? "flex" : "none"}}>
             <Typography variant="h4" className={classes.title}>UPDATE USER DATA</Typography>
-            <Box className={classes.someDiv}>
+            <Box className={classes.fieldsWrapper}>
                 {textFields.map((textField: any) => {
                     return <TextField
                     key={textField.label}

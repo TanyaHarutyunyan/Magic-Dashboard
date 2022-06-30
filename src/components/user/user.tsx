@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { IState, IUsers } from "../../redux/usersReducer/usersReducerTypes";
 import { fetchData } from "../../redux/usersReducer/usersReducer";
 import UpdateUserModal from "../updateUser/updateUser";
+import DepositMoneyModal from "../depositMoney/depositMoney";
 
 
 const User: FC = () => {
@@ -20,13 +21,21 @@ const User: FC = () => {
         return state.updateModalReducer.isOpen
     }) 
 
-    const usersList = useSelector((state: IState) => {
-        return state.usersReducer.users[0]
+    const isOpenDeposit = useSelector((state:IState) => {
+        return state.depositMoneyReducer.isOpen
     })
 
     function updateUser(){
         dispatch({
             type: "setTrue",
+            payload: true
+        })
+    }
+
+    function depositMoney(){
+        console.log("clicked")
+        dispatch({
+            type: "setDepositTrue",
             payload: true
         })
     }
@@ -53,7 +62,8 @@ const User: FC = () => {
         <Box className={classes.userWrapper}>
             <Header />
             <UpdateUserModal />
-            <Box className={classes.userInfoWrapper} style={{filter: isOpen ? "blur(30px)" : "none"}}>
+            <DepositMoneyModal />
+            <Box className={classes.userInfoWrapper} style={{filter: isOpen || isOpenDeposit ? "blur(30px)" : "none"}}>
                 <Box className={classes.title}>User</Box>
                 <Box className={classes.userInfo}>
                 <Box>
@@ -79,6 +89,7 @@ const User: FC = () => {
                 </Box>
                 </Box>
                 <Button variant="contained" size="large" className={classes.updateBtn} onClick={updateUser}>Update User</Button>
+                <Button variant="contained" size="large" className={classes.updateBtn} onClick={depositMoney}>Deposit Money</Button>
                 </Box>
             </Box>
         </Box>
